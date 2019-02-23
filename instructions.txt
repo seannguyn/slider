@@ -1,1 +1,8 @@
 npm install react-redux react-router-dom redux-promise redux redux-thunk axios --save
+
+deploy to heroku, add these to package.json:
+
+    "engines": {
+        "node": "check by typing node -v",
+        "npm": "check by typing npm -v"
+    },
