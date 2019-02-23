@@ -1,0 +1,1 @@
+npm install react-redux react-router-dom redux-promise redux redux-thunk axios --save
