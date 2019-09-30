@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
+import OnDemandGame from './OnDemand/OnDemandGame';
 
 class Home extends Component {
     render() {
         return (
-            <div>
-                <h1>This is home (1)</h1>
-            </div>
+            <OnDemandGame/>
         )
     }
 }

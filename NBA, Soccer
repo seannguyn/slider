@@ -1,0 +1,66 @@
+NBA, Soccer
+{
+  "league": {
+    "name": "",
+    "logoURL": ""
+  },
+  "matchInfo": {
+    "info_1": "",
+    "info_2": "",
+    "date": "",
+    "time": ""
+  },
+  "team_1": {
+    "name": "",
+    "country": "",
+    "logoURL": ""
+  },
+  "team_2": {
+    "name": "",
+    "country": "",
+    "logoURL": ""
+  }
+  "result": ""
+}
+
+MMA Events, UFC
+{
+  "league": {
+    "name": "",
+    "logoURL": ""
+  },
+  "matchInfo": {
+    "info_1": "",
+    "info_2": "",
+    "date": "",
+    "time": ""
+  },
+  "events": [
+    {
+      "fighter_1":{
+        "name":"",
+        "country": ""
+      }
+      "fighter_2":{
+        "name":"",
+        "country": ""
+      }
+      "result": "",
+      "order": "",
+      "main": true
+    },
+    {
+      "fighter_1":{
+        "name":"",
+        "country": ""
+      }
+      "fighter_2":{
+        "name":"",
+        "country": ""
+      }
+      "result": "",
+      "order": "",
+      "main": true
+    }
+  ]
+}

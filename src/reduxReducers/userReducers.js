@@ -1,7 +1,7 @@
 // contain initial and dispatch {type: action}
 import {
 
-} from '../reduxActions/type';
+} from '../reduxActions/types';
 
 const initialState = {success:false};
 
