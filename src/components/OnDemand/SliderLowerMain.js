@@ -72,6 +72,17 @@ export default class SliderLowerMain extends Component {
             }else if(hoverIdIndex < index ) {
                 order = order.concat(" shiftRightMid")
             }
+
+            // if (index === 0){
+            //     order = order.concat(" FirstHover")
+            // }
+            // else if (index === SliderItemId.length-1) {
+            //     order="Last";
+            //     order = order.concat(" Last")
+            // }
+            // else {
+            //     order="Mid"
+            // }
             return <SliderItem movie={movies[index]} offHover={offHover} onHover={onHover} key={id} id={id} className={order}/>
          })
          return allSliderItem;

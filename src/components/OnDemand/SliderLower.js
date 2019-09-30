@@ -4,6 +4,8 @@ import SliderLowerRight from './SliderLowerRight';
 import SliderLowerMain from './SliderLowerMain';
 import uuid from "uuid";
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { moveSliderLeft, moveSliderRight } from '../../reduxActions/onDemandActions';
 
 const sliderLowerStyle = {
     width: "100%",
@@ -14,7 +16,7 @@ const sliderLowerStyle = {
     /* margin-top: 10%, */
     margin: "0%",
 }
-export default class SliderLower extends Component {
+class SliderLower extends Component {
 
     constructor(props) {
         super(props);
@@ -29,8 +31,8 @@ export default class SliderLower extends Component {
     
     populateSliderLowerMainId() {
         var {sliderLowerData} =this.props;
-        // console.log(sliderLowerData);
 
+        // for each SliderLowerMain, populate 6 movies. There are 5 SliderLowerMain, 6 movies each. Therefore 30 movies in a slider
         var SliderLowerMainMovie = []
         for (var i = 0; i < 5; i++) {
             var movies = {
@@ -45,39 +47,31 @@ export default class SliderLower extends Component {
         this.setState({
             SliderLowerMainMovie: SliderLowerMainMovie
         })
-
-        // ,() => {
-        //     console.log(this.state.SliderLowerMainId);
-        // })
     }
 
     showActiveSlide() {
-        var {activeIndex} = this.state;
-        
+        // get the status of current slideId
+        var sliderStatus = this.props.content.filter((obj)=> {
+            
+            return obj.title === this.props.sliderId
+        })
+
         var allSliderMain = this.state.SliderLowerMainMovie.map(function (object, index) {
             /// if index === 0 ( it is first element in array ) then show it
-            var hide = (index === activeIndex) ? '' : 'Slider-Main-Hide';
+            var hide = (index === sliderStatus[0].status) ? '' : 'Slider-Main-Hide';
             return <SliderLowerMain key={object.id} id={object.id} movies={object.movies} className={hide} />
          })
          return allSliderMain;
     }
 
     moveLeft() {
-        var {activeIndex,SliderLowerMainMovie} = this.state;
-        this.setState({
-            activeIndex: activeIndex - 1 < 0 ? SliderLowerMainMovie.length - 1 : activeIndex-1
-        },() => {
-            console.log("Silder: "+this.props.sliderId+", Move left: "+ this.state.activeIndex+" "+this.state.SliderLowerMainMovie[activeIndex]);
-        })
+        this.props.dispatch(moveSliderLeft(this.props.sliderId))
+        this.forceUpdate();
     }
 
     moveRight() {
-        var {activeIndex,SliderLowerMainMovie} = this.state;
-        this.setState({
-            activeIndex: activeIndex + 1 > SliderLowerMainMovie.length - 1 ? 0 : activeIndex+1
-        },() => {
-            console.log("Silder: "+this.props.sliderId+", Move right: "+ this.state.activeIndex+" "+this.state.SliderLowerMainMovie[activeIndex]);
-        })
+        this.props.dispatch(moveSliderRight(this.props.sliderId));
+        this.forceUpdate();
     }
 
     render() {
@@ -96,3 +90,9 @@ export default class SliderLower extends Component {
 SliderLower.propTypes = {
     sliderLowerData: PropTypes.array.isRequired,
 };
+
+const mapStateToProps = state => ({
+    content: state.onDemand.content,
+});
+
+export default connect(mapStateToProps)(SliderLower);

@@ -4,7 +4,11 @@ import OnDemandGame from './OnDemand/OnDemandGame';
 class Home extends Component {
     render() {
         return (
-            <OnDemandGame/>
+            
+            <div>
+                <OnDemandGame/>
+                {/* <div className="overlay"></div> */}
+            </div>
         )
     }
 }

@@ -64,7 +64,7 @@ class OnDemandGame extends Component {
 
     renderSlider() {
         return this.state.currentSlide.map(function (content) {
-            return <Slider key={content.title} sliderId={content.title} sliderLowerData={content.data}/>
+            return <Slider key={content.title} sliderId={content.title} status={content.status} sliderLowerData={content.data}/>
         });
     }
 

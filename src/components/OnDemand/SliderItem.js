@@ -9,7 +9,7 @@ export default class SliderItem extends Component {
         }
     }
     onHover(id) {
-        this.videoRef.play();
+        // this.videoRef.play();
         this.props.onHover(id);
 
         // If they were already a programmed setTimeout
@@ -27,7 +27,7 @@ export default class SliderItem extends Component {
         // }, 200);
     }
     offHover() {
-        this.videoRef.pause();
+        // this.videoRef.pause();
         this.props.offHover();
         // if (this.state.timeoutOnMouseOver) {
         //     clearTimeout(this.timeoutOnMouseOver);
@@ -52,7 +52,7 @@ export default class SliderItem extends Component {
                 <img src={movie.imgURL} alt=""/>
                 <div className="content">
                     <div className="overlay">
-                        <video ref={this.handleRef} className="Slider-Item-Video" loop muted src={movie.trailerURL} type="video/mp4"/>
+                        {/* <video ref={this.handleRef} className="Slider-Item-Video" loop muted src={movie.trailerURL} type="video/mp4"/> */}
                     </div>
                 </div>
             </div>

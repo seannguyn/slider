@@ -15,7 +15,7 @@ export default class SliderUpperTitle extends Component {
     render() {
         return (
             <div style={sliderUpperTitleStyle}>
-                Trending
+                {this.props.title}
             </div>
         )
     }

@@ -25,8 +25,8 @@ export default class Slider extends Component {
             <div ref={(scroller) => {
                 this.scroller = scroller;
             }} onClick={this.handleClick.bind(this)} className="Slider" style={sliderStyle}>
-                <SliderUpper sliderUpperId={1}/>
-                <SliderLower sliderLowerData={this.props.sliderLowerData}/>
+                <SliderUpper status={this.props.status} title={this.props.sliderId}/>
+                <SliderLower sliderId={this.props.sliderId} sliderLowerData={this.props.sliderLowerData}/>
             </div>
         )
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import SliderUpperTitle from './SliderUpperTitle';
 import SliderUpperStatus from './SliderUpperStatus';
+import { connect } from 'react-redux';
 
 const sliderUpperStyle = {
     width: "100%",
@@ -9,17 +10,22 @@ const sliderUpperStyle = {
     // border: "1px solid white"
 }
 
-export default class SliderUpper extends Component {
+class SliderUpper extends Component {
     handleClick() {
-        console.log(this.props.sliderUpperId);
-        
+        console.log(this.props);
     }
-    render() {
+    render() {        
         return (
             <div onClick={this.handleClick.bind(this)} style={sliderUpperStyle} className="SliderUpper">
-                <SliderUpperTitle/>
-                <SliderUpperStatus/>
+                <SliderUpperTitle title={this.props.title}/>
+                <SliderUpperStatus status={this.props.status}/>
             </div>
         )
     }
 }
+
+const mapStateToProps = state => ({
+    content: state.onDemand.content,
+});
+
+export default connect(mapStateToProps)(SliderUpper);
