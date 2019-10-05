@@ -1,4 +1,3 @@
-// contain initial and dispatch {type: action}
 import {
 
 } from '../reduxActions/types';

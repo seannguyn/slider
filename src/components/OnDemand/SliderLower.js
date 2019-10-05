@@ -5,17 +5,7 @@ import SliderLowerMain from './SliderLowerMain';
 import uuid from "uuid";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { moveSliderLeft, moveSliderRight } from '../../reduxActions/onDemandActions';
 
-const sliderLowerStyle = {
-    width: "100%",
-    height: "65%",
-    position: "absolute",
-    bottom: "0",
-    left: "0",
-    /* margin-top: 10%, */
-    margin: "0%",
-}
 class SliderLower extends Component {
 
     constructor(props) {
@@ -31,7 +21,7 @@ class SliderLower extends Component {
     
     populateSliderLowerMainId() {
         var {sliderLowerData} =this.props;
-
+        
         // for each SliderLowerMain, populate 6 movies. There are 5 SliderLowerMain, 6 movies each. Therefore 30 movies in a slider
         var SliderLowerMainMovie = []
         for (var i = 0; i < 5; i++) {
@@ -51,34 +41,35 @@ class SliderLower extends Component {
 
     showActiveSlide() {
         // get the status of current slideId
-        var sliderStatus = this.props.content.filter((obj)=> {
-            
-            return obj.title === this.props.sliderId
-        })
-
+        
+        var {activeIndex} = this.state;
         var allSliderMain = this.state.SliderLowerMainMovie.map(function (object, index) {
             /// if index === 0 ( it is first element in array ) then show it
-            var hide = (index === sliderStatus[0].status) ? '' : 'Slider-Main-Hide';
+            var hide = (index === activeIndex) ? '' : 'Slider-Main-Hide';
             return <SliderLowerMain key={object.id} id={object.id} movies={object.movies} className={hide} />
-         })
+         });
          return allSliderMain;
     }
 
     moveLeft() {
-        this.props.dispatch(moveSliderLeft(this.props.sliderId))
-        this.forceUpdate();
+        var {activeIndex} = this.state;
+        this.setState({
+            activeIndex: activeIndex - 1 < 0 ? 4 : activeIndex - 1,
+        },() => this.props.changeSliderStatus(this.state.activeIndex));
+        
     }
 
     moveRight() {
-        this.props.dispatch(moveSliderRight(this.props.sliderId));
-        this.forceUpdate();
+        var {activeIndex} = this.state;
+        this.setState({
+            activeIndex: activeIndex + 1 > 4 ? 0 : activeIndex + 1,
+        },() => this.props.changeSliderStatus(this.state.activeIndex))
     }
 
     render() {
         var allSliderMain = this.showActiveSlide();
-        
         return (
-            <div style={sliderLowerStyle}>
+            <div className={"Slider-Wrapper"}>
                 <SliderLowerLeft moveLeft={this.moveLeft.bind(this)}/>
                 {allSliderMain}
                 <SliderLowerRight moveRight={this.moveRight.bind(this)}/>

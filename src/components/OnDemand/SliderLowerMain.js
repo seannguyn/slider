@@ -1,20 +1,52 @@
 import React, { Component } from 'react'
 import SliderItem from './SliderItem';
 import uuid from 'uuid';
+
+const hoverStateInit = {
+    isRunning: false,
+    timeElapsed: 0,
+    hover: false,
+    hoverId: "",
+}
+
 export default class SliderLowerMain extends Component {
 
     constructor(props) {
+        
         super(props);
+        // IT HAS TO BE IN THIS POSITION
+        ["onHover","offHover","update", "reset"].forEach((method) => {
+            this[method] = this[method].bind(this);
+        });
         this.state = {
             SliderItemId: [],
-            hover: false,
-            hoverId: ""
+            ...hoverStateInit
         }
+        
         this.onHover = this.onHover.bind(this);
         this.offHover = this.offHover.bind(this);
     }
     componentDidMount() {
         this.populateSliderItemId();
+    }
+
+    reset() {
+        clearInterval(this.timer);
+        this.setState({
+            ...hoverStateInit
+        })
+    }
+    startTimer() {
+        clearInterval(this.timer);
+        this.startTime = Date.now();
+        this.timer = setInterval(this.update, 10);
+    }
+
+    update() {
+        const delta = Date.now() - this.startTime;
+
+        this.setState({timeElapsed: this.state.timeElapsed + delta});
+        this.startTime = Date.now();
     }
     
     populateSliderItemId() {
@@ -33,14 +65,14 @@ export default class SliderLowerMain extends Component {
         var {onHover,offHover} = this;
         var allSliderItem = SliderItemId.map(function (id, index) {
             var order = "";
+
+            // if you dont include these lines, weird scale effect will happen
             if (index === 0){
-                order="First";
+                order="FirstStatic";
             }else if (index === SliderItemId.length-1) {
-                order="Last";
+                order="LastStatic";
             }
-            // else {
-            //     order="Mid"
-            // }
+
             return <SliderItem movie={movies[index]} offHover={offHover} onHover={onHover} key={id} id={id} className={order}/>
          })
          return allSliderItem;
@@ -72,30 +104,20 @@ export default class SliderLowerMain extends Component {
             }else if(hoverIdIndex < index ) {
                 order = order.concat(" shiftRightMid")
             }
-
-            // if (index === 0){
-            //     order = order.concat(" FirstHover")
-            // }
-            // else if (index === SliderItemId.length-1) {
-            //     order="Last";
-            //     order = order.concat(" Last")
-            // }
-            // else {
-            //     order="Mid"
-            // }
             return <SliderItem movie={movies[index]} offHover={offHover} onHover={onHover} key={id} id={id} className={order}/>
          })
          return allSliderItem;
     }
 
     onHover(id) {
+        this.startTimer();
         this.setState({
             hover: true,
             hoverId: id
         })
     }
 
-    offHover(id) {
+    offHover() {
         this.setState({
             hover: false,
             hoverId: ""
@@ -103,9 +125,10 @@ export default class SliderLowerMain extends Component {
     }
 
     render() {
-        var allSliderItem = this.state.hover ? this.showSlideItemShift() : this.showSlideItem();
+        var allSliderItem = this.state.hover && this.state.hoverId !== "" && this.state.timeElapsed > 500 ? this.showSlideItemShift() : this.showSlideItem();
         return (
-            <div className={[this.props.className, "Slider-Main"].join(" ")}>
+            <div onMouseLeave={this.reset}
+            className={[this.props.className, "Slider-Main"].join(" ")}>
                 {allSliderItem}
             </div>
         )

@@ -1,58 +1,82 @@
 import React, { Component } from 'react'
-
+import axios from 'axios'
 export default class SliderItem extends Component {
     constructor(props) {
         super(props);
+        ["update", "reset"].forEach((method) => {
+            this[method] = this[method].bind(this);
+          });
+
         this.videoRef = React.createRef();
-        this.state = {
-            timeoutOnMouseOver:false,
+
+        this.state = this.initialState = {
+            isRunning: false,
+            timeElapsed: 0,
+            url:"",
+            called: false
         }
+        
     }
-    onHover(id) {
-        // this.videoRef.play();
-        this.props.onHover(id);
 
-        // If they were already a programmed setTimeout
-        // stop it, and run a new one
-        // if (this.state.timeoutOnMouseOver) {
-        //     clearTimeout(this.timeoutOnMouseOver);
-        // }
+    reset() {
+        clearInterval(this.timer);
+        this.setState({...this.initialState});
+    }
 
-        // this.timeoutOnMouseOver = setTimeout(() => {
-        //     this.videoRef.play();
-        //     this.props.onHover(id);
-        //     this.setState({
-        //         timeoutOnMouseOver: false
-        //     });
-        // }, 200);
+    startTimer() {
+        this.startTime = Date.now();
+        this.timer = setInterval(this.update, 10);
+    }
+
+    update() {
+        const delta = Date.now() - this.startTime;
+
+        this.setState({timeElapsed: this.state.timeElapsed + delta},()=>{
+            if (this.state.timeElapsed > 50 && !this.state.called) {
+                this.setState({called: true},()=>{
+                    this.props.onHover(this.props.id)
+                })
+            }
+        });
+        this.startTime = Date.now();
+    }
+
+
+    async onHover(id) {
+        this.startTimer();
+        // this.props.onHover(id);  
+
+        await axios({
+            url: 'https://strimi.s3-ap-southeast-2.amazonaws.com/testVid2.mov',
+            method: 'GET',
+            responseType: 'blob', // important
+        })
+            .then((response) => {
+            const url = URL.createObjectURL(new Blob([response.data]));
+            this.setState({
+                url: url
+            })
+        })
+            .catch((error) => {
+            console.log(error);
+        });
+
     }
     offHover() {
-        // this.videoRef.pause();
+        this.reset();
         this.props.offHover();
-        // if (this.state.timeoutOnMouseOver) {
-        //     clearTimeout(this.timeoutOnMouseOver);
-        // }
-
-        // this.timeoutOnMouseOver = setTimeout(() => {
-        //     this.videoRef.pause();
-        //     this.props.offHover();
-        //     this.setState({
-        //         timeoutOnMouseOver: false
-        //     });
-        // }, 200);
     }
-    handleRef = (video) => {
-        this.videoRef = video;
-    };
 
     render() {
-        var {movie} = this.props;        
+        var {movie} = this.props;  
         return (
             <div onMouseLeave={this.offHover.bind(this)} onMouseEnter={this.onHover.bind(this, this.props.id)} className={[this.props.className, "Slider-Item"].join(" ")}>
                 <img src={movie.imgURL} alt=""/>
                 <div className="content">
                     <div className="overlay">
-                        {/* <video ref={this.handleRef} className="Slider-Item-Video" loop muted src={movie.trailerURL} type="video/mp4"/> */}
+                    <div>
+                        <video className={"Slider-Item-Video"} loop muted autoPlay src={this.state.url} type="video/mp4"></video>
+                    </div>
                     </div>
                 </div>
             </div>

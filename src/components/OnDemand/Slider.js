@@ -1,32 +1,28 @@
 import React, { Component } from 'react'
 import SliderUpper from './SliderUpper';
 import SliderLower from './SliderLower';
-const sliderStyle = {
-    width: "100%",
-    height: "20%",
-    position: "relative",
-    // border: "2px solid blue",
-    marginTop: "2%",
-}
+
 export default class Slider extends Component {
-    
-    // componentDidMount() {
-    //     console.log("oooooooo "+this.scroller.clientHeight+" oooooooo");
-    // }
-    
 
-    handleClick() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            statusId: 0
+        }
+    }
 
+    changeSliderStatus(statusId) {
+        this.setState({
+            statusId: statusId
+        })
     }
 
     render() {
         
         return (
-            <div ref={(scroller) => {
-                this.scroller = scroller;
-            }} onClick={this.handleClick.bind(this)} className="Slider" style={sliderStyle}>
-                <SliderUpper status={this.props.status} title={this.props.sliderId}/>
-                <SliderLower sliderId={this.props.sliderId} sliderLowerData={this.props.sliderLowerData}/>
+            <div className="Slider">
+                <SliderUpper status={this.state.statusId} title={this.props.sliderId}/>
+                <SliderLower changeSliderStatus={this.changeSliderStatus.bind(this)} sliderId={this.props.sliderId} sliderLowerData={this.props.sliderLowerData}/>
             </div>
         )
     }

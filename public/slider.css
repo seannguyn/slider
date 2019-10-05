@@ -1,7 +1,7 @@
 html, body{
     background-color: #121421;
     overflow-x: hidden;
-    overflow-y:hidden;
+    /* overflow-y:hidden; */
     user-select: none;
     width: 100%;
     height: 100%;
@@ -12,20 +12,22 @@ html, body{
      -ms-user-select: none;
          user-select: none;
          overflow-x: hidden;
+         display: flex;
+         flex-direction: column;
 }
 
 /* ON DEMAND SLIDER */
-.On-Demand-Game {
+.On-Demand {
     width: 100%;
-    height: auto;
+    overflow-y: visible;
 }
 
 .Slider{
     width: 100%;
     height: 20%;
     position: relative;
-    /* border: 2px solid red; */
-    margin-top: 2%; 
+    z-index: 1;
+    /* border: 2px solid blue; */
 }
 
 img{
@@ -48,7 +50,6 @@ img{
     width: 100%;
     height: 30%;
     position: relative;
-    border: 1px solid red;
 }
 
 .Slider-Left {
@@ -125,16 +126,22 @@ img{
     background-color: #252f49;
     opacity: 1;
     float: left;
-    transition: 0.5s transform cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: 0.5s transform cubic-bezier(0.77, 0, 0.175, 1);
     backface-visibility: hidden;
     margin-left: 0.4%;
     will-change: transform, box-shadow, z-index;
+    cursor: pointer;
 }
 
 .Slider-Item-Video {
     width: 100%;
     height: 100%;
     margin: 0;
+    z-index: 99;
+}
+
+.FirstStatic {
+    transform-origin: left;
 }
 
 .First {
@@ -156,6 +163,10 @@ img{
     /* transition-delay:1s; */
     transform: scale(1.75);
     will-change: transform, box-shadow, z-index;
+}
+
+.LastStatic{
+    transform-origin: right;
 }
 
 .Last{
@@ -180,6 +191,7 @@ img{
     font-size: 150%;
     position: absolute;
     top: 50%;
+    z-index: 0;
 }
 
 .Slider-Status {
@@ -245,7 +257,7 @@ img{
     left: 0;
     bottom: 0;
     right: 0;
-    z-index: 3;
+    z-index: 99;
     /* transition-delay:0.5s; */
   }
   
@@ -257,7 +269,7 @@ img{
     background-color: black;
     transition: opacity 0.8s;
     will-change: transform, box-shadow, z-index;
-    z-index: 3;
+    z-index: 99;
     /* transition-delay:0.5s; */
 }
 

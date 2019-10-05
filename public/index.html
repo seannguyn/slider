@@ -19,7 +19,10 @@
   <style>
     #root{
       width: 100%;
-      height: 100%;
+      height: auto;
+      overflow-y: scroll;
+      margin: 0;
+      padding: 0;
     }
   </style>
   <body>
@@ -28,15 +31,18 @@
 
   </body>
   <script text="text/javascript">
-    var a=document.getElementsByClassName('On-Demand-Game')[0];
-    a.style.height=a.offsetWidth/1.4+'px';
-    // a.style.height="100%";
+
+    var onDemandList=document.getElementsByClassName('On-Demand');
+    for (var i = 0; i < onDemandList.length; i++) {
+      onDemandList[i].style.height = onDemandList[i].offsetWidth/1.4+'px';
+    }
 
 
     window.onresize=function resizeit(){
-      var a=document.getElementsByClassName('On-Demand-Game')[0];
-      a.style.height=a.offsetWidth/1.4+'px';
-      // a.style.height="100%";
+      var onDemandList=document.getElementsByClassName('On-Demand');
+      for (var i = 0; i < onDemandList.length; i++) {
+        onDemandList[i].style.height = onDemandList[i].offsetWidth/1.4+'px';
+      }
     };
   </script>
 </html>
