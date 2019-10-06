@@ -47,7 +47,7 @@ export default class SliderItem extends Component {
         // this.props.onHover(id);  
 
         await axios({
-            url: 'https://strimi.s3-ap-southeast-2.amazonaws.com/testVid2.mov',
+            url: 'https:d18t36kckh43xl.cloudfront.net/testVid2.mov',
             method: 'GET',
             responseType: 'blob', // important
         })
@@ -74,9 +74,8 @@ export default class SliderItem extends Component {
                 <img src={movie.imgURL} alt=""/>
                 <div className="content">
                     <div className="overlay">
-                    <div>
-                        <video className={"Slider-Item-Video"} loop muted autoPlay src={this.state.url} type="video/mp4"></video>
-                    </div>
+                        <img src={movie.imgURL} alt=""/>
+                        {/* <video className={"Slider-Item-Video"} loop muted src={this.state.url} type="video/mp4"></video> */}
                     </div>
                 </div>
             </div>

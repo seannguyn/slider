@@ -2,16 +2,6 @@ import React, { Component } from 'react'
 import SliderUpperStatusCircle from './SliderUpperStatusCircle';
 import { connect } from 'react-redux';
 
-const sliderUpperStatusStyle = {
-    width: "14.79636%",
-    float: "right",
-    height: "30px",
-    paddingTop: "1%",
-    position: "absolute",
-    top: "40%",
-    right: "4.46%",
-    // border: "1px solid blue"
-}
 class SliderUpperStatus extends Component {
     constructor(props) {
         super(props);
@@ -34,9 +24,12 @@ class SliderUpperStatus extends Component {
     }
     render() {
         var statusCircles = this.renderStatusCircle();
-                
+
+        var display={
+            display:this.props.showProgress?"block":"none" 
+        }
         return (
-            <div style={sliderUpperStatusStyle}>
+            <div style={display}className={"Slider-Status"}>
                 {statusCircles}
             </div>
         )

@@ -8,7 +8,7 @@ class SliderUpper extends Component {
         return (
             <div className="Slider-Upper">
                 <SliderUpperTitle title={this.props.title}/>
-                <SliderUpperStatus status={this.props.status}/>
+                <SliderUpperStatus status={this.props.status} showProgress={this.props.showProgress}/>
             </div>
         )
     }

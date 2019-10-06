@@ -7,7 +7,8 @@ export default class Slider extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            statusId: 0
+            statusId: 0,
+            showProgress: false,
         }
     }
 
@@ -17,12 +18,18 @@ export default class Slider extends Component {
         })
     }
 
+    toggleProgress(value) {        
+        this.setState({
+            showProgress: value
+        })
+    }
+
     render() {
-        
+        var {showProgress} = this.state;
         return (
             <div className="Slider">
-                <SliderUpper status={this.state.statusId} title={this.props.sliderId}/>
-                <SliderLower changeSliderStatus={this.changeSliderStatus.bind(this)} sliderId={this.props.sliderId} sliderLowerData={this.props.sliderLowerData}/>
+                <SliderUpper showProgress={showProgress} status={this.state.statusId} title={this.props.sliderId}/>
+                <SliderLower toggleProgress={this.toggleProgress.bind(this)} changeSliderStatus={this.changeSliderStatus.bind(this)} sliderId={this.props.sliderId} sliderLowerData={this.props.sliderLowerData}/>
             </div>
         )
     }

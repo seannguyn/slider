@@ -66,10 +66,18 @@ class SliderLower extends Component {
         },() => this.props.changeSliderStatus(this.state.activeIndex))
     }
 
+    enter(){
+        this.props.toggleProgress(true);
+    }
+
+    leave() {
+        this.props.toggleProgress(false)
+    }
+
     render() {
         var allSliderMain = this.showActiveSlide();
         return (
-            <div className={"Slider-Wrapper"}>
+            <div onMouseEnter={this.enter.bind(this)} onMouseLeave={this.leave.bind(this)} className={"Slider-Wrapper"}>
                 <SliderLowerLeft moveLeft={this.moveLeft.bind(this)}/>
                 {allSliderMain}
                 <SliderLowerRight moveRight={this.moveRight.bind(this)}/>
